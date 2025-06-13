@@ -1,0 +1,75 @@
+.mapPageContainer {
+  height: 100%;
+}
+
+.mapHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.mapControls {
+  display: flex;
+  gap: 1rem;
+}
+
+.filterGroup {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filterGroup select {
+  padding: 0.5rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.mapContainerStyled {
+  height: 500px;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mapSummary {
+  margin-top: 1.5rem;
+  background-color: white;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.mapSummary h3 {
+  margin: 0 0 1rem 0;
+}
+
+.mapSummary p {
+  margin: 0.5rem 0;
+  cursor: pointer;
+}
+
+.mapSummary p:hover {
+  color: #e63946;
+}
+
+/* Leaflet map custom styles */
+.leafletContainer {
+  height: 100%;
+  width: 100%;
+}
+
+.leafletPopupContent {
+  margin: 0.5rem;
+}
+
+.leafletPopupContent h3 {
+  margin: 0 0 0.5rem 0;
+  color: #333;
+}
+
+.leafletPopupContent p {
+  margin: 0.25rem 0;
+  color: #666;
+} 
