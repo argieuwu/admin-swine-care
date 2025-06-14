@@ -1,19 +1,19 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/components/Header.css';
+import styles from './Header.module.css'; // Use the module CSS in the same directory
 
 const Header = () => {
   return (
-    <header className="header-container">
-      <div className="nav-container">
-        <div className="logo">
+    <header className={styles.headerContainer}>
+      <div className={styles.navContainer}>
+        <div className={styles.logo}>
           <Link to="/">
-            <img src="/images/SwineCareFinal.png" alt="Pig Icon" className="logo-icon" />
-            <span className="logo-text">ASF <span className="highlight">Tracker</span></span>
+            <img src="/images/SwineCareFinal.png" alt="Pig Icon" className={styles.logoIcon} />
+            <span className={styles.logoText}>ASF <span className={styles.highlight}>Tracker</span></span>
           </Link>
         </div>
-        <div className="user-profile">
-          <div className="user-avatar">A</div>
+        <div className={styles.userProfile}>
+          <div className={styles.userAvatar}>A</div>
           <span>Admin</span>
         </div>
       </div>
@@ -21,4 +21,4 @@ const Header = () => {
   );
 };
 
-export default Header; 
+export default Header;

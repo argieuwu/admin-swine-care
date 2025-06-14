@@ -1,10 +1,10 @@
-.header-container {
+.headerContainer {
   background-color: #ffffff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   padding: 1rem 2rem;
 }
 
-.nav-container {
+.navContainer {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -24,27 +24,27 @@
   color: inherit;
 }
 
-.logo-icon {
+.logoIcon {
   height: 40px;
   margin-right: 10px;
 }
 
-.logo-text {
+.logoText {
   font-size: 1.5rem;
   font-weight: 600;
 }
 
-.logo-text .highlight {
+.highlight {
   color: #e63946;
 }
 
-.user-profile {
+.userProfile {
   display: flex;
   align-items: center;
   gap: 10px;
 }
 
-.user-avatar {
+.userAvatar {
   width: 35px;
   height: 35px;
   background-color: #e63946;
@@ -54,4 +54,4 @@
   align-items: center;
   justify-content: center;
   font-weight: 600;
-} 
+}
