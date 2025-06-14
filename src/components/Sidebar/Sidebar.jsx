@@ -1,38 +1,28 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
-import styles from './Sidebar.module.css'; // Use the module CSS in the same directory
+import { Link } from 'react-router-dom';
+import styles from './Sidebar.module.css';
+import { FaTachometerAlt, FaMapMarkedAlt } from 'react-icons/fa';
 
 const Sidebar = () => {
-  const handleLogout = () => {
-    console.log('Logout clicked');
-  };
-
   return (
     <aside className={styles.sidebarContainer}>
       <div className={styles.sidebarContent}>
-        <h3 className={styles.sidebarTitle}>Admin Navigation</h3>
-        <p className={styles.menuTitle}>Monitoring</p>
+        <h2 className={styles.sidebarTitle}>Menu</h2>
         <ul className={styles.sidebarMenu}>
           <li className={styles.menuItem}>
-            <NavLink to="/" end className={({ isActive }) => 
-              isActive ? `${styles.sidebarLink} ${styles.active}` : styles.sidebarLink
-            }>
-              Overview
-            </NavLink>
+            <Link to="/overview" className={styles.sidebarLink}>
+              <FaTachometerAlt className={styles.menuIcon} /> Overview
+            </Link>
           </li>
           <li className={styles.menuItem}>
-            <NavLink to="/map" className={({ isActive }) => 
-              isActive ? `${styles.sidebarLink} ${styles.active}` : styles.sidebarLink
-            }>
-              ASF Map
-            </NavLink>
+            <Link to="/map" className={styles.sidebarLink}>
+              <FaMapMarkedAlt className={styles.menuIcon} /> Map
+            </Link>
           </li>
         </ul>
       </div>
       <div className={styles.sidebarFooter}>
-        <button className={styles.logoutButton} onClick={handleLogout}>
-          Logout
-        </button>
+        <button className={styles.logoutButton}>Logout</button>
       </div>
     </aside>
   );
