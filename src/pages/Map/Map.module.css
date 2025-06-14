@@ -54,22 +54,19 @@
   color: #e63946;
 }
 
-/* Leaflet map custom styles */
-.leafletContainer {
-  height: 100%;
-  width: 100%;
+.riskStats {
+  display: flex;
+  gap: 1rem;
 }
 
-.leafletPopupContent {
-  margin: 0.5rem;
+.riskStatHigh {
+  color: #c62828;
 }
 
-.leafletPopupContent h3 {
-  margin: 0 0 0.5rem 0;
-  color: #333;
+.riskStatMedium {
+  color: #ef6c00;
 }
 
-.leafletPopupContent p {
-  margin: 0.25rem 0;
-  color: #666;
-} 
+.riskStatLow {
+  color: #2e7d32;
+}
