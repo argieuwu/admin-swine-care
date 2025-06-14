@@ -1,8 +1,23 @@
 import React, { useState } from 'react';
-import styles from './Overview.module.css'; // Use the module CSS in the same directory
+import styles from './Overview.module.css';
 
 const Overview = () => {
   const [dateRange, setDateRange] = useState('7days');
+  const [selectedReport, setSelectedReport] = useState(null);
+
+  const reports = [
+    { date: '2024-02-20', farmer: 'John Smith', farmId: 'FARM-001', location: 'Barangay 1, Tagum', result: 'Confirmed', affectedPigs: 15 },
+    { date: '2024-02-19', farmer: 'Maria Garcia', farmId: 'FARM-002', location: 'Barangay 2, Tagum', result: 'Suspected', affectedPigs: 8 },
+    { date: '2024-02-18', farmer: 'Robert Santos', farmId: 'FARM-003', location: 'Barangay 3, Tagum', result: 'Resolved', affectedPigs: 0 },
+  ];
+
+  const handleViewDetails = (report) => {
+    setSelectedReport(report);
+  };
+
+  const closeDialog = () => {
+    setSelectedReport(null);
+  };
 
   return (
     <div className={styles.overviewContainer}>
@@ -10,7 +25,7 @@ const Overview = () => {
         <h2>Dashboard Overview</h2>
         <div className={styles.dateFilter}>
           <label>Date Range:</label>
-          <select value={dateRange} onChange={(e) => setDateRange(e.target.value)}>
+          <select value={dateRange} onChange={(e) => setDateRange(e.target.value)} className={styles.selectInput}>
             <option value="7days">Last 7 Days</option>
             <option value="30days">Last 30 Days</option>
             <option value="90days">Last 90 Days</option>
@@ -19,10 +34,10 @@ const Overview = () => {
       </div>
 
       <div className={styles.alertsSection}>
-        <div className={styles.alert + ' ' + styles.highRisk}>
+        <div className={styles.alertCard + ' ' + styles.highRisk}>
           <strong>High Risk Alert:</strong> 3 new suspected cases reported in the last 24 hours
         </div>
-        <div className={styles.alert + ' ' + styles.suspected}>
+        <div className={styles.alertCard + ' ' + styles.suspected}>
           <strong>Attention:</strong> 5 farms require immediate inspection
         </div>
       </div>
@@ -69,37 +84,35 @@ const Overview = () => {
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>2024-02-20</td>
-                <td>John Smith</td>
-                <td>FARM-001</td>
-                <td>Barangay 1, Tarlac</td>
-                <td><span className={styles.status + ' ' + styles.confirmed}>Confirmed</span></td>
-                <td>15</td>
-                <td><button className={styles.actionButton}>View Details</button></td>
-              </tr>
-              <tr>
-                <td>2024-02-19</td>
-                <td>Maria Garcia</td>
-                <td>FARM-002</td>
-                <td>Barangay 2, Tarlac</td>
-                <td><span className={styles.status + ' ' + styles.suspected}>Suspected</span></td>
-                <td>8</td>
-                <td><button className={styles.actionButton}>View Details</button></td>
-              </tr>
-              <tr>
-                <td>2024-02-18</td>
-                <td>Robert Santos</td>
-                <td>FARM-003</td>
-                <td>Barangay 3, Tarlac</td>
-                <td><span className={styles.status + ' ' + styles.resolved}>Resolved</span></td>
-                <td>0</td>
-                <td><button className={styles.actionButton}>View Details</button></td>
-              </tr>
+              {reports.map((report, index) => (
+                <tr key={index}>
+                  <td>{report.date}</td>
+                  <td>{report.farmer}</td>
+                  <td>{report.farmId}</td>
+                  <td>{report.location}</td>
+                  <td><span className={styles.status + ' ' + styles[report.result.toLowerCase()]}>{report.result}</span></td>
+                  <td>{report.affectedPigs}</td>
+                  <td><button className={styles.actionButton} onClick={() => handleViewDetails(report)}>View Details</button></td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
       </div>
+
+      {selectedReport && (
+        <div className={styles.dialogOverlay} onClick={closeDialog}>
+          <div className={styles.dialog} onClick={(e) => e.stopPropagation()}>
+            <h3>Details for {selectedReport.farmer}</h3>
+            <p><strong>Date:</strong> {selectedReport.date}</p>
+            <p><strong>Farm ID:</strong> {selectedReport.farmId}</p>
+            <p><strong>Location:</strong> {selectedReport.location}</p>
+            <p><strong>Result:</strong> <span className={styles.status + ' ' + styles[selectedReport.result.toLowerCase()]}>{selectedReport.result}</span></p>
+            <p><strong>Affected Pigs:</strong> {selectedReport.affectedPigs}</p>
+            <button className={styles.closeButton} onClick={closeDialog}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

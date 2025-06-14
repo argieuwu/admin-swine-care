@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
-import styles from './Map.module.css'; // Use the module CSS in the same directory
-
+import styles from './Map.module.css';
 import L from 'leaflet';
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -17,9 +16,9 @@ let DefaultIcon = L.icon({
 L.Marker.prototype.options.icon = DefaultIcon;
 
 const sampleMarkers = [
-  { id: 1, position: [15.5, 120.5], title: 'Farm A', description: 'Suspected case reported', riskLevel: 'high' },
-  { id: 2, position: [15.6, 120.6], title: 'Farm B', description: 'Under observation', riskLevel: 'medium' },
-  { id: 3, position: [15.4, 120.4], title: 'Farm C', description: 'No cases reported', riskLevel: 'low' },
+  { id: 1, position: [7.4438, 125.8057], title: 'Farm A', description: 'Suspected case reported', riskLevel: 'high' }, // Tagum City, Mindanao
+  { id: 2, position: [7.4589, 125.8112], title: 'Farm B', description: 'Under observation', riskLevel: 'medium' },
+  { id: 3, position: [7.4291, 125.7993], title: 'Farm C', description: 'No cases reported', riskLevel: 'low' },
 ];
 
 const Map = () => {
@@ -38,11 +37,11 @@ const Map = () => {
   return (
     <div className={styles.mapPageContainer}>
       <div className={styles.mapHeader}>
-        <h2>ASF Map</h2>
+        <h2 className={styles.mapTitle}>ASF Map</h2>
         <div className={styles.mapControls}>
           <div className={styles.filterGroup}>
             <label>Date Range:</label>
-            <select value={dateRange} onChange={(e) => setDateRange(e.target.value)}>
+            <select value={dateRange} onChange={(e) => setDateRange(e.target.value)} className={styles.selectInput}>
               <option value="7days">Last 7 Days</option>
               <option value="30days">Last 30 Days</option>
               <option value="90days">Last 90 Days</option>
@@ -50,7 +49,7 @@ const Map = () => {
           </div>
           <div className={styles.filterGroup}>
             <label>Risk Level:</label>
-            <select value={riskLevel} onChange={(e) => setRiskLevel(e.target.value)}>
+            <select value={riskLevel} onChange={(e) => setRiskLevel(e.target.value)} className={styles.selectInput}>
               <option value="all">All Levels</option>
               <option value="high">High Risk</option>
               <option value="medium">Medium Risk</option>
@@ -61,7 +60,7 @@ const Map = () => {
       </div>
 
       <div className={styles.mapContainerStyled}>
-        <MapContainer center={[15.5, 120.5]} zoom={10} style={{ height: '100%', width: '100%' }}>
+        <MapContainer center={[7.4438, 125.8057]} zoom={12} className={styles.mapLeaflet}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -71,7 +70,7 @@ const Map = () => {
               <Popup>
                 <h3>{marker.title}</h3>
                 <p>{marker.description}</p>
-                <p>Risk Level: {marker.riskLevel}</p>
+                <p>Risk Level: <span className={styles[marker.riskLevel]}>{marker.riskLevel}</span></p>
               </Popup>
             </Marker>
           ))}
@@ -80,11 +79,23 @@ const Map = () => {
 
       <div className={styles.mapSummary}>
         <h3>Map Summary</h3>
-        <p>Total Farms Mapped: {filteredMarkers.length}</p>
-        <div className={styles.riskStats}>
-          <span className={styles['riskStat-high']}>High Risk: {filteredMarkers.filter(m => m.riskLevel === 'high').length}</span>
-          <span className={styles['riskStat-medium']}>Medium Risk: {filteredMarkers.filter(m => m.riskLevel === 'medium').length}</span>
-          <span className={styles['riskStat-low']}>Low Risk: {filteredMarkers.filter(m => m.riskLevel === 'low').length}</span>
+        <div className={styles.summaryGrid}>
+          <div className={styles.summaryCard}>
+            <span>Total Farms Mapped</span>
+            <strong>{filteredMarkers.length}</strong>
+          </div>
+          <div className={styles.summaryCard}>
+            <span>High Risk</span>
+            <strong>{filteredMarkers.filter(m => m.riskLevel === 'high').length}</strong>
+          </div>
+          <div className={styles.summaryCard}>
+            <span>Medium Risk</span>
+            <strong>{filteredMarkers.filter(m => m.riskLevel === 'medium').length}</strong>
+          </div>
+          <div className={styles.summaryCard}>
+            <span>Low Risk</span>
+            <strong>{filteredMarkers.filter(m => m.riskLevel === 'low').length}</strong>
+          </div>
         </div>
       </div>
     </div>

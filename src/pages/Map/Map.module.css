@@ -1,5 +1,7 @@
 .mapPageContainer {
-  height: 100%;
+  padding: 80px 20px 20px 260px; /* Reduced left padding from 270px to 260px */
+  min-height: 100vh;
+  background-color: #f8f9fa;
 }
 
 .mapHeader {
@@ -7,11 +9,21 @@
   justify-content: space-between;
   align-items: center;
   margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.mapTitle {
+  font-size: 1.5rem;
+  color: #2e7d32;
+  margin: 0;
 }
 
 .mapControls {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
 }
 
 .filterGroup {
@@ -20,53 +32,91 @@
   gap: 0.5rem;
 }
 
-.filterGroup select {
-  padding: 0.5rem;
+.selectInput {
+  padding: 0.6rem 1rem;
   border: 1px solid #ddd;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 0.9rem;
+  background-color: white;
+  transition: border-color 0.3s ease;
+}
+
+.selectInput:focus {
+  border-color: #2e7d32;
+  outline: none;
 }
 
 .mapContainerStyled {
-  height: 500px;
-  border-radius: 8px;
+  height: 70vh;
+  max-height: 800px;
+  border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1.5rem;
+  width: 100%;
+}
+
+.mapLeaflet {
+  height: 100% !important;
+  width: 100% !important;
 }
 
 .mapSummary {
-  margin-top: 1.5rem;
-  background-color: white;
   padding: 1.5rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.summaryGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+
+.summaryCard {
+  padding: 1rem;
+  background-color: #f0f4f8;
   border-radius: 8px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
 }
 
-.mapSummary h3 {
-  margin: 0 0 1rem 0;
+.summaryCard span {
+  color: #666;
+  font-size: 0.9rem;
 }
 
-.mapSummary p {
-  margin: 0.5rem 0;
-  cursor: pointer;
-}
-
-.mapSummary p:hover {
-  color: #e63946;
-}
-
-.riskStats {
-  display: flex;
-  gap: 1rem;
-}
-
-.riskStatHigh {
-  color: #c62828;
-}
-
-.riskStatMedium {
-  color: #ef6c00;
-}
-
-.riskStatLow {
+.summaryCard strong {
+  display: block;
+  font-size: 1.5rem;
   color: #2e7d32;
+}
+
+.high {
+  color: #c62828;
+  font-weight: 600;
+}
+
+.medium {
+  color: #ef6c00;
+  font-weight: 600;
+}
+
+.low {
+  color: #2e7d32;
+  font-weight: 600;
+}
+
+@media (max-width: 768px) {
+  .mapPageContainer {
+    padding: 60px 10px 10px 240px; /* Adjusted for smaller screens */
+  }
+  .mapControls {
+    flex-direction: column;
+    gap: 1rem;
+  }
+  .mapContainerStyled {
+    height: 60vh;
+  }
 }
