@@ -1,9 +1,9 @@
 import React from 'react';
-import styles from './styles/App.module.css';
-import Header from './components/Header';
-import Sidebar from './components/Sidebar';
-import Overview from './pages/Overview';
-import Map from './pages/Map';
+import styles from './App.module.css';
+import Header from './components/Header/Header';
+import Sidebar from './components/Sidebar/Sidebar';
+import Overview from './pages/Overview/Overview';
+import Map from './pages/Map/Map';
 
 function App() {
   return (
@@ -11,9 +11,9 @@ function App() {
       <Header />
       <Sidebar />
       <Overview />
-     <Map /> 
+      <Map />
     </div>
   );
 }
 
-export default App; 
+export default App;
