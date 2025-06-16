@@ -1,29 +1,32 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 .mapPageContainer {
-  padding: 80px 20px 20px 260px; /* Reduced left padding from 270px to 260px */
-  min-height: 100vh;
+  padding: 0 1rem 1rem 0;
+  min-height: calc(100vh - 60px);
   background-color: #f8f9fa;
+  margin-left: 220px;
 }
 
 .mapHeader {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 1.5rem;
   padding: 1rem;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  background: #fff;
+  border-bottom: 1px solid #e0e0e0;
+  margin-bottom: 1rem;
 }
 
-.mapTitle {
+.mapHeader h2 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
   font-size: 1.5rem;
-  color: #2e7d32;
-  margin: 0;
+  color: #222;
 }
 
 .mapControls {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
 .filterGroup {
@@ -32,28 +35,28 @@
   gap: 0.5rem;
 }
 
-.selectInput {
-  padding: 0.6rem 1rem;
-  border: 1px solid #ddd;
-  border-radius: 6px;
+.filterGroup label {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
   font-size: 0.9rem;
-  background-color: white;
-  transition: border-color 0.3s ease;
+  color: #666;
 }
 
-.selectInput:focus {
-  border-color: #2e7d32;
-  outline: none;
+.selectInput {
+  padding: 0.5rem 1rem;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  font-size: 0.9rem;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
 }
 
 .mapContainerStyled {
   height: 70vh;
-  max-height: 800px;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-  margin-bottom: 1.5rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
   width: 100%;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .mapLeaflet {
@@ -63,60 +66,56 @@
 
 .mapSummary {
   padding: 1.5rem;
-  background-color: white;
-  border-radius: 12px;
+  background: linear-gradient(135deg, #ffffff, #f0f4f8);
+  border-radius: 8px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+}
+
+.mapSummary h3 {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 700;
+  font-size: 1.3rem;
+  color: #2ecc40;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
 .summaryGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
-  margin-top: 1rem;
 }
 
 .summaryCard {
-  padding: 1rem;
-  background-color: #f0f4f8;
-  border-radius: 8px;
   text-align: center;
+  padding: 1rem;
+  background: #fff;
+  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.summaryCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .summaryCard span {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
   color: #666;
-  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
 }
 
 .summaryCard strong {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 600;
+  font-size: 1.6rem;
+  color: #222;
   display: block;
-  font-size: 1.5rem;
-  color: #2e7d32;
-}
-
-.high {
-  color: #c62828;
-  font-weight: 600;
-}
-
-.medium {
-  color: #ef6c00;
-  font-weight: 600;
-}
-
-.low {
-  color: #2e7d32;
-  font-weight: 600;
-}
-
-@media (max-width: 768px) {
-  .mapPageContainer {
-    padding: 60px 10px 10px 240px; /* Adjusted for smaller screens */
-  }
-  .mapControls {
-    flex-direction: column;
-    gap: 1rem;
-  }
-  .mapContainerStyled {
-    height: 60vh;
-  }
+  margin-top: 0.5rem;
 }
