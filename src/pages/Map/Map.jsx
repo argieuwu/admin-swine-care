@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from 'react';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Popup, CircleMarker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import styles from './Map.module.css';
-import L from 'leaflet';
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-
-let DefaultIcon = L.icon({
-  iconUrl: icon,
-  shadowUrl: iconShadow,
-  iconSize: [25, 41],
-  iconAnchor: [12, 41],
-});
-
-L.Marker.prototype.options.icon = DefaultIcon;
 
 const sampleMarkers = [
   { id: 1, position: [7.4438, 125.8057], title: 'Farm A', description: 'Suspected case reported', riskLevel: 'high' }, // Tagum City, Mindanao
   { id: 2, position: [7.4589, 125.8112], title: 'Farm B', description: 'Under observation', riskLevel: 'medium' },
   { id: 3, position: [7.4291, 125.7993], title: 'Farm C', description: 'No cases reported', riskLevel: 'low' },
 ];
+
+const riskColors = {
+  high: '#e63946',
+  medium: '#ffb347',
+  low: '#2ecc40',
+};
 
 const Map = () => {
   const [dateRange, setDateRange] = useState('7days');
@@ -66,13 +60,18 @@ const Map = () => {
             attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           />
           {filteredMarkers.map(marker => (
-            <Marker key={marker.id} position={marker.position}>
+            <CircleMarker
+              key={marker.id}
+              center={marker.position}
+              radius={18}
+              pathOptions={{ color: riskColors[marker.riskLevel], fillColor: riskColors[marker.riskLevel], fillOpacity: 0.5 }}
+            >
               <Popup>
                 <h3>{marker.title}</h3>
                 <p>{marker.description}</p>
                 <p>Risk Level: <span className={styles[marker.riskLevel]}>{marker.riskLevel}</span></p>
               </Popup>
-            </Marker>
+            </CircleMarker>
           ))}
         </MapContainer>
       </div>
