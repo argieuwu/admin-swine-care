@@ -1,28 +1,31 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
 .sidebarContainer {
-  width: 240px; /* Reduced width from 280px to 240px */
-  background: linear-gradient(180deg, #ffffff, #f8f9fa);
-  box-shadow: 4px 0 12px rgba(0, 0, 0, 0.15);
+  width: 220px;
+  background: #fff;
+  box-shadow: 2px 0 8px rgba(0,0,0,0.06);
+  border-right: 1px solid #e0e0e0;
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 90px);
+  height: calc(100vh - 80px);
   position: fixed;
-  top: 90px;
+  top: 80px;
   left: 0;
   z-index: 900;
   transition: all 0.3s ease;
-  border-right: 1px solid #e0e0e0;
 }
 
 .sidebarContent {
-  padding: 2rem 1.5rem;
+  padding: 2rem 1rem 1rem 1rem;
   flex: 1;
 }
 
 .sidebarTitle {
   margin-bottom: 2rem;
-  color: #2e7d32;
-  font-size: 1.4rem;
+  color: #222;
+  font-size: 1.2rem;
   font-weight: 700;
+  font-family: 'Poppins', sans-serif;
   text-transform: uppercase;
   letter-spacing: 1px;
 }
@@ -34,68 +37,144 @@
 }
 
 .menuItem {
-  margin-bottom: 1rem;
+  font-family: 'Poppins', sans-serif;
+  margin-bottom: 1.2rem;
 }
 
 .sidebarLink {
   display: flex;
   align-items: center;
-  padding: 1rem 1.5rem;
-  color: #333;
+  padding: 0.9rem 1.2rem;
+  color: #222;
   text-decoration: none;
-  border-radius: 10px;
-  transition: all 0.3s ease;
-  font-size: 1.1rem;
+  border-radius: 8px;
+  transition: all 0.2s;
+  font-size: 1rem;
   font-weight: 600;
-  background: #ffffff;
+  background: none;
 }
 
 .menuIcon {
-  margin-right: 1rem;
-  color: #2e7d32;
-  font-size: 1.2rem;
+  margin-right: 0.8rem;
+  color: #2ecc40;
+  font-size: 1.1rem;
 }
 
 .sidebarLink:hover {
-  background: linear-gradient(90deg, #f0f4f8, #ffffff);
-  color: #ff6b6b;
-  transform: translateX(5px);
+  background: #f0f4f8;
+  color: #2ecc40;
 }
 
 .sidebarLink.active {
-  background: linear-gradient(90deg, #2e7d32, #4a9a5b);
-  color: white;
+  background: #2ecc40;
+  color: #fff;
 }
 
 .sidebarLink.active .menuIcon {
-  color: white;
+  color: #fff;
 }
 
 .sidebarFooter {
-  padding: 1.5rem;
+  padding: 1.2rem;
   border-top: 1px solid #e0e0e0;
 }
 
 .logoutButton {
   width: 100%;
-  padding: 1rem;
-  background: linear-gradient(135deg, #e63946, #d62828);
-  color: white;
+  padding: 0.9rem;
+  background: linear-gradient(135deg, #e63946, #ff6b6b);
+  color: #fff;
   border: none;
-  border-radius: 10px;
+  border-radius: 8px;
   cursor: pointer;
   font-weight: 700;
-  transition: all 0.3s ease;
+  transition: all 0.2s;
   text-transform: uppercase;
+  font-size: 1rem;
 }
 
 .logoutButton:hover {
-  background: linear-gradient(135deg, #c1121f, #a4161a);
-  transform: scale(1.05);
+  background: linear-gradient(135deg, #c1121f, #e63946);
+  transform: scale(1.04);
 }
 
 @media (max-width: 768px) {
   .sidebarContainer {
-    width: 200px; /* Adjusted for smaller screens */
+    width: 170px;
   }
+}
+
+.modalOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.25);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modalDialog {
+  background: #fff;
+  border-radius: 14px;
+  box-shadow: 0 8px 32px rgba(44,204,64,0.10), 0 1.5px 8px rgba(0,0,0,0.08);
+  padding: 2rem 2.5rem 1.5rem 2.5rem;
+  min-width: 320px;
+  max-width: 90vw;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  align-items: center;
+  animation: modalPop 0.18s cubic-bezier(.4,1.6,.6,1) 1;
+}
+
+@keyframes modalPop {
+  0% { transform: scale(0.85); opacity: 0; }
+  100% { transform: scale(1); opacity: 1; }
+}
+
+.modalTitle {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #222;
+  margin-bottom: 1.2rem;
+  text-align: center;
+}
+
+.modalActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 0.5rem;
+}
+
+.modalButton {
+  padding: 0.7rem 1.6rem;
+  border-radius: 8px;
+  border: none;
+  font-size: 1rem;
+  font-weight: 600;
+  
+  cursor: pointer;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+}
+
+.modalCancelButton {
+  background: #f0f0f0;
+  color: #222;
+}
+
+.modalCancelButton:hover {
+  background: #e0e0e0;
+}
+
+.modalConfirmButton {
+  background: linear-gradient(90deg,#e63946,#ff6b6b);
+  color: #fff;
+}
+
+.modalConfirmButton:hover {
+  background: linear-gradient(90deg,#c1121f,#e63946);
 }
