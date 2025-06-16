@@ -4,7 +4,7 @@
   width: 100%;
   background: #fff;
   border-bottom: 1px solid #e0e0e0;
-  padding: 1rem 0;
+  padding: 0.8rem 0; 
   position: relative;
   font-family: 'Poppins', sans-serif;
 }
@@ -22,12 +22,12 @@
 }
 
 .logoIcon {
-  height: 48px;
-  margin-right: 18px;
+  height: 32px; 
+  margin-right: 12px; 
 }
 
 .logoText {
-  font-size: 2rem;
+  font-size: 1.5rem; 
   font-weight: 800;
   color: #222;
   font-family: 'Poppins', sans-serif;
@@ -37,4 +37,4 @@
   color: #2ecc40;
   font-weight: 900;
   font-family: 'Poppins', sans-serif;
-} 
+}

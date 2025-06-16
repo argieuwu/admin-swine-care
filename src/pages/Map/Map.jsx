@@ -4,7 +4,7 @@ import 'leaflet/dist/leaflet.css';
 import styles from './Map.module.css';
 
 const sampleMarkers = [
-  { id: 1, position: [7.4438, 125.8057], title: 'Farm A', description: 'Suspected case reported', riskLevel: 'high' }, // Tagum City, Mindanao
+  { id: 1, position: [7.4438, 125.8057], title: 'Farm A', description: 'Suspected case reported', riskLevel: 'high' }, 
   { id: 2, position: [7.4589, 125.8112], title: 'Farm B', description: 'Under observation', riskLevel: 'medium' },
   { id: 3, position: [7.4291, 125.7993], title: 'Farm C', description: 'No cases reported', riskLevel: 'low' },
 ];

@@ -46,22 +46,22 @@ const Overview = () => {
         <div className={styles.statCard}>
           <h3>Total Cases</h3>
           <div className={styles.statValue}>127</div>
-          <div className={styles.statTrend + ' ' + styles.positive}>+12% from last week</div>
+      
         </div>
         <div className={styles.statCard}>
           <h3>Active Outbreaks</h3>
           <div className={styles.statValue}>23</div>
-          <div className={styles.statTrend + ' ' + styles.negative}>-5% from last week</div>
+    
         </div>
         <div className={styles.statCard}>
           <h3>Affected Farms</h3>
           <div className={styles.statValue}>45</div>
-          <div className={styles.statTrend + ' ' + styles.neutral}>No change</div>
+     
         </div>
         <div className={styles.statCard}>
           <h3>Containment Rate</h3>
           <div className={styles.statValue}>78%</div>
-          <div className={styles.statTrend + ' ' + styles.positive}>+3% from last week</div>
+    
         </div>
       </div>
 
@@ -102,8 +102,9 @@ const Overview = () => {
 
       {selectedReport && (
         <div className={styles.dialogOverlay} onClick={closeDialog}>
-          <div className={styles.dialog} onClick={(e) => e.stopPropagation()}>
-            <h3>Details for {selectedReport.farmer}</h3>
+          <div className={styles.dialog} onClick={e => e.stopPropagation()}>
+            <h3>Report Details</h3>
+            <p><strong>Farmer:</strong> {selectedReport.farmer}</p>
             <p><strong>Date:</strong> {selectedReport.date}</p>
             <p><strong>Farm ID:</strong> {selectedReport.farmId}</p>
             <p><strong>Location:</strong> {selectedReport.location}</p>
