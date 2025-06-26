@@ -4,6 +4,10 @@ import styles from './Login.module.css';
 import AuthHeader from '../../components/AuthHeader/AuthHeader';
 import AuthFooter from '../../components/AuthFooter/AuthFooter';
 import swineBg from '../../assets/swinebackgorundimage.jpg';
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { toast } from 'react-toastify'; 
+
+const auth = getAuth();
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -11,14 +15,32 @@ const Login = () => {
   const [submitted, setSubmitted] = useState(false);
   const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setSubmitted(true);
-    if (!email || !password) {
-      return;
-    }
+  const auth = getAuth();
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  setSubmitted(true);
+
+  if (!email || !password) {
+    toast.error("Email and password are required.");
+    return;
+  }
+
+  try {
+    const userCredential = await signInWithEmailAndPassword(auth, email, password);
+    const user = userCredential.user;
+    toast.success("Login successful!");
     navigate('/overview');
-  };
+  } catch (error) {
+    if (error.code === "auth/user-not-found") {
+      toast.error("No account found with this email.");
+    } else if (error.code === "auth/wrong-password") {
+      toast.error("Incorrect password.");
+    } else {
+      toast.error(`Login error: ${error.message}`);
+    }
+  }
+};
 
   return (
     <>

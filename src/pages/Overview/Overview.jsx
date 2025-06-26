@@ -1,7 +1,24 @@
 import React, { useState } from 'react';
+import { collection, getDocs } from 'firebase/firestore';
 import styles from './Overview.module.css';
+import { db } from '../../config/firebase';
 
+async function getAllUsers() {
+  try {
+    const usersCollection = collection(db, "users");
+    const snapshot = await getDocs(usersCollection);
+    const users = snapshot.docs.map(doc => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
+    return users;
+  } catch (error) {
+    console.error("Error fetching users:", error);
+    return [];
+  }
+}
 const Overview = () => {
+  getAllUsers();
   const [dateRange, setDateRange] = useState('7days');
   const [selectedReport, setSelectedReport] = useState(null);
 
@@ -117,5 +134,9 @@ const Overview = () => {
     </div>
   );
 };
+
+function getFarmerDetails(){
+  
+}
 
 export default Overview;
