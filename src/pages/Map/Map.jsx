@@ -2,31 +2,79 @@ import React, { useState, useEffect } from 'react';
 import { MapContainer, TileLayer, Popup, CircleMarker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import styles from './Map.module.css';
-
-const sampleMarkers = [
-  { id: 1, position: [7.4438, 125.8057], title: 'Farm A', description: 'Suspected case reported', riskLevel: 'high' }, 
-  { id: 2, position: [7.4589, 125.8112], title: 'Farm B', description: 'Under observation', riskLevel: 'medium' },
-  { id: 3, position: [7.4291, 125.7993], title: 'Farm C', description: 'No cases reported', riskLevel: 'low' },
-];
+import { db } from '../../config/firebase';
+import { collection, onSnapshot } from 'firebase/firestore';
 
 const riskColors = {
-  high: '#e63946',
-  medium: '#ffb347',
-  low: '#2ecc40',
+  high: '#e63946',   // RED
+  medium: '#ffb347', // YELLOW
+  low: '#2ecc40',    // GREEN
 };
 
 const Map = () => {
   const [dateRange, setDateRange] = useState('7days');
   const [riskLevel, setRiskLevel] = useState('all');
-  const [filteredMarkers, setFilteredMarkers] = useState(sampleMarkers);
+  const [allMarkers, setAllMarkers] = useState([]);
+  const [filteredMarkers, setFilteredMarkers] = useState([]);
+
+  useEffect(() => {
+    const userUnsubscribes = [];
+
+    const unsubscribeUsers = onSnapshot(collection(db, 'users'), (usersSnapshot) => {
+      const newUnsubscribes = [];
+
+      usersSnapshot.forEach((userDoc) => {
+        const userId = userDoc.id;
+        const resultsRef = collection(db, `users/${userId}/results`);
+
+        const unsubscribeResults = onSnapshot(resultsRef, (resultsSnapshot) => {
+          const updatedResults = [];
+
+          resultsSnapshot.forEach((resultDoc) => {
+            const result = resultDoc.data();
+
+            if (result.lat && result.long) {
+              updatedResults.push({
+                id: `${userId}_${resultDoc.id}`,
+                position: [result.lat, result.long],
+                title: result.title || `Farm (${userId})`,
+                description: result.description || 'No description',
+                riskLevel: (result.riskLevel || 'low').toLowerCase(),
+                skin: result.skin || null,
+                ears: result.ears || null,
+              });
+            }
+          });
+
+          // Merge user-specific updates into all markers
+          setAllMarkers((prev) => {
+            const filteredOutOld = prev.filter((m) => !m.id.startsWith(`${userId}_`));
+            return [...filteredOutOld, ...updatedResults];
+          });
+        });
+
+        newUnsubscribes.push(unsubscribeResults);
+      });
+
+      // Replace old unsubscribes
+      userUnsubscribes.forEach(unsub => unsub());
+      userUnsubscribes.length = 0;
+      newUnsubscribes.forEach(unsub => userUnsubscribes.push(unsub));
+    });
+
+    return () => {
+      unsubscribeUsers();
+      userUnsubscribes.forEach(unsub => unsub());
+    };
+  }, []);
 
   useEffect(() => {
     if (riskLevel === 'all') {
-      setFilteredMarkers(sampleMarkers);
+      setFilteredMarkers(allMarkers);
     } else {
-      setFilteredMarkers(sampleMarkers.filter(marker => marker.riskLevel === riskLevel));
+      setFilteredMarkers(allMarkers.filter(marker => marker.riskLevel === riskLevel));
     }
-  }, [riskLevel]);
+  }, [riskLevel, allMarkers]);
 
   return (
     <div className={styles.mapPageContainer}>
@@ -57,19 +105,59 @@ const Map = () => {
         <MapContainer center={[7.4438, 125.8057]} zoom={12} className={styles.mapLeaflet}>
           <TileLayer
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution='© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
           />
           {filteredMarkers.map(marker => (
             <CircleMarker
               key={marker.id}
               center={marker.position}
               radius={18}
-              pathOptions={{ color: riskColors[marker.riskLevel], fillColor: riskColors[marker.riskLevel], fillOpacity: 0.5 }}
+              pathOptions={{
+                color: riskColors[marker.riskLevel],
+                fillColor: riskColors[marker.riskLevel],
+                fillOpacity: 0.5
+              }}
             >
               <Popup>
-                <h3>{marker.title}</h3>
-                <p>{marker.description}</p>
-                <p>Risk Level: <span className={styles[marker.riskLevel]}>{marker.riskLevel}</span></p>
+                <div style={{ maxWidth: "220px" }}>
+                  <h3>{marker.title}</h3>
+                  <p>{marker.description}</p>
+                  <p>Risk Level: <span className={styles[marker.riskLevel]}>{marker.riskLevel}</span></p>
+
+                  {marker.skin && (
+                    <div style={{ marginTop: 10 }}>
+                      <strong>Skin:</strong>
+                      <img
+                        src={`data:image/jpeg;base64,${marker.skin}`}
+                        alt="Skin"
+                        style={{
+                          width: "100%",
+                          maxHeight: "150px",
+                          objectFit: "cover",
+                          borderRadius: "8px",
+                          marginTop: "5px",
+                        }}
+                      />
+                    </div>
+                  )}
+
+                  {marker.ears && (
+                    <div style={{ marginTop: 10 }}>
+                      <strong>Ears:</strong>
+                      <img
+                        src={`data:image/jpeg;base64,${marker.ears}`}
+                        alt="Ears"
+                        style={{
+                          width: "100%",
+                          maxHeight: "150px",
+                          objectFit: "cover",
+                          borderRadius: "8px",
+                          marginTop: "5px",
+                        }}
+                      />
+                    </div>
+                  )}
+                </div>
               </Popup>
             </CircleMarker>
           ))}
