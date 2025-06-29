@@ -3,19 +3,33 @@ import { MapContainer, TileLayer, Popup, CircleMarker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import styles from './Map.module.css';
 import { db } from '../../config/firebase';
-import { collection, onSnapshot } from 'firebase/firestore';
+import { collection, onSnapshot, getDoc, doc } from 'firebase/firestore';
+import axios from 'axios';
 
 const riskColors = {
-  high: '#e63946',   // RED
-  medium: '#ffb347', // YELLOW
-  low: '#2ecc40',    // GREEN
+  high: '#e63946',
+  medium: '#ffb347',
+  low: '#2ecc40',
 };
 
 const Map = () => {
-  const [dateRange, setDateRange] = useState('7days');
+  const [dateRange, setDateRange] = useState('today');
   const [riskLevel, setRiskLevel] = useState('all');
   const [allMarkers, setAllMarkers] = useState([]);
   const [filteredMarkers, setFilteredMarkers] = useState([]);
+
+  const getLocationName = async (lat, lng) => {
+    const apiKey = 'adad10551cc24a04b3e71d3a8ac33bb4';
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lng}&key=${apiKey}`;
+
+    try {
+      const response = await axios.get(url);
+      return response.data.results[0]?.formatted || 'Unknown location';
+    } catch (error) {
+      console.error('Reverse geocoding error:', error);
+      return 'Unknown location';
+    }
+  };
 
   useEffect(() => {
     const userUnsubscribes = [];
@@ -25,28 +39,32 @@ const Map = () => {
 
       usersSnapshot.forEach((userDoc) => {
         const userId = userDoc.id;
+        const userData = userDoc.data();
+        const username = userData.username || `Farm (${userId})`;
         const resultsRef = collection(db, `users/${userId}/results`);
 
-        const unsubscribeResults = onSnapshot(resultsRef, (resultsSnapshot) => {
+        const unsubscribeResults = onSnapshot(resultsRef, async (resultsSnapshot) => {
           const updatedResults = [];
 
-          resultsSnapshot.forEach((resultDoc) => {
+          for (const resultDoc of resultsSnapshot.docs) {
             const result = resultDoc.data();
 
             if (result.lat && result.long) {
+              const location = await getLocationName(result.lat, result.long);
               updatedResults.push({
                 id: `${userId}_${resultDoc.id}`,
                 position: [result.lat, result.long],
-                title: result.title || `Farm (${userId})`,
+                title: username,
                 description: result.description || 'No description',
                 riskLevel: (result.riskLevel || 'low').toLowerCase(),
                 skin: result.skin || null,
                 ears: result.ears || null,
+                timestamp: result.timestamp || null,
+                location,
               });
             }
-          });
+          }
 
-          // Merge user-specific updates into all markers
           setAllMarkers((prev) => {
             const filteredOutOld = prev.filter((m) => !m.id.startsWith(`${userId}_`));
             return [...filteredOutOld, ...updatedResults];
@@ -56,7 +74,6 @@ const Map = () => {
         newUnsubscribes.push(unsubscribeResults);
       });
 
-      // Replace old unsubscribes
       userUnsubscribes.forEach(unsub => unsub());
       userUnsubscribes.length = 0;
       newUnsubscribes.forEach(unsub => userUnsubscribes.push(unsub));
@@ -69,12 +86,29 @@ const Map = () => {
   }, []);
 
   useEffect(() => {
-    if (riskLevel === 'all') {
-      setFilteredMarkers(allMarkers);
-    } else {
-      setFilteredMarkers(allMarkers.filter(marker => marker.riskLevel === riskLevel));
-    }
-  }, [riskLevel, allMarkers]);
+    const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const startOfWeek = new Date(now);
+    startOfWeek.setDate(now.getDate() - now.getDay());
+    startOfWeek.setHours(0, 0, 0, 0);
+    const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+    const startOfQuarter = new Date(now.getFullYear(), Math.floor(now.getMonth() / 3) * 3, 1);
+
+    setFilteredMarkers(
+      allMarkers.filter(marker => {
+        const markerDate = marker.timestamp?.toDate?.() ?? new Date(0);
+        const matchRisk = riskLevel === 'all' || marker.riskLevel === riskLevel;
+
+        let matchDate = false;
+        if (dateRange === 'today') matchDate = markerDate >= startOfToday;
+        else if (dateRange === 'week') matchDate = markerDate >= startOfWeek;
+        else if (dateRange === 'month') matchDate = markerDate >= startOfMonth;
+        else if (dateRange === 'quarter') matchDate = markerDate >= startOfQuarter;
+
+        return matchRisk && matchDate;
+      })
+    );
+  }, [riskLevel, dateRange, allMarkers]);
 
   return (
     <div className={styles.mapPageContainer}>
@@ -84,9 +118,10 @@ const Map = () => {
           <div className={styles.filterGroup}>
             <label>Date Range:</label>
             <select value={dateRange} onChange={(e) => setDateRange(e.target.value)} className={styles.selectInput}>
-              <option value="7days">Last 7 Days</option>
-              <option value="30days">Last 30 Days</option>
-              <option value="90days">Last 90 Days</option>
+              <option value="today">Today</option>
+              <option value="week">This Week</option>
+              <option value="month">This Month</option>
+              <option value="quarter">This Quarter</option>
             </select>
           </div>
           <div className={styles.filterGroup}>
@@ -122,6 +157,7 @@ const Map = () => {
                 <div style={{ maxWidth: "220px" }}>
                   <h3>{marker.title}</h3>
                   <p>{marker.description}</p>
+                  <p><strong>Location:</strong> {marker.location}</p>
                   <p>Risk Level: <span className={styles[marker.riskLevel]}>{marker.riskLevel}</span></p>
 
                   {marker.skin && (
