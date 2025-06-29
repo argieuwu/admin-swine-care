@@ -8,7 +8,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-  const handleLogout = () => {
+  const hanadleLogout = () => {
     setShowLogoutModal(true);
   };
 
