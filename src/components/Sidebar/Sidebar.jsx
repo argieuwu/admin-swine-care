@@ -8,7 +8,7 @@ const Sidebar = () => {
   const navigate = useNavigate();
   const [showLogoutModal, setShowLogoutModal] = useState(false);
 
-  const hanadleLogout = () => {
+  const handleLogout = () => {
     setShowLogoutModal(true);
   };
 
@@ -24,15 +24,21 @@ const Sidebar = () => {
   return (
     <aside className={styles.sidebarContainer}>
       <div className={styles.sidebarContent}>
-      <h2 className={styles.sidebarTitle}>Menu</h2>
+        <h2 className={styles.sidebarTitle}>Menu</h2>
         <ul className={styles.sidebarMenu}>
           <li className={styles.menuItem}>
-            <Link to="/overview" className={`${styles.sidebarLink} ${location.pathname === '/overview' ? styles.active : ''}`}> 
+            <Link
+              to="/overview"
+              className={`${styles.sidebarLink} ${location.pathname === '/overview' ? styles.active : ''}`}
+            >
               <FaTachometerAlt className={styles.menuIcon} /> Overview
             </Link>
           </li>
           <li className={styles.menuItem}>
-            <Link to="/map" className={`${styles.sidebarLink} ${location.pathname === '/map' ? styles.active : ''}`}> 
+            <Link
+              to="/map"
+              className={`${styles.sidebarLink} ${location.pathname === '/map' ? styles.active : ''}`}
+            >
               <FaMapMarkedAlt className={styles.menuIcon} /> ASF Map
             </Link>
           </li>
@@ -46,8 +52,12 @@ const Sidebar = () => {
           <div className={styles.modalDialog}>
             <div className={styles.modalTitle}>Are you sure you want to logout?</div>
             <div className={styles.modalActions}>
-              <button className={`${styles.modalButton} ${styles.modalCancelButton}`} onClick={cancelLogout}>Cancel</button>
-              <button className={`${styles.modalButton} ${styles.modalConfirmButton}`} onClick={confirmLogout}>Logout</button>
+              <button className={`${styles.modalButton} ${styles.modalCancelButton}`} onClick={cancelLogout}>
+                Cancel
+              </button>
+              <button className={`${styles.modalButton} ${styles.modalConfirmButton}`} onClick={confirmLogout}>
+                Logout
+              </button>
             </div>
           </div>
         </div>
