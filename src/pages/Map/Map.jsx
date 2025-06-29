@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Popup, CircleMarker } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import styles from './Map.module.css';
 import { db } from '../../config/firebase';
-import { collection, onSnapshot, getDoc, doc } from 'firebase/firestore';
+import { collection, onSnapshot } from 'firebase/firestore';
 import axios from 'axios';
 
 const riskColors = {
@@ -55,7 +55,7 @@ const Map = () => {
                 id: `${userId}_${resultDoc.id}`,
                 position: [result.lat, result.long],
                 title: username,
-                description: result.description || 'No description',
+                description: result.pigId || 'No Pig ID', // 👈 changed from result.description
                 riskLevel: (result.riskLevel || 'low').toLowerCase(),
                 skin: result.skin || null,
                 ears: result.ears || null,
@@ -156,7 +156,7 @@ const Map = () => {
               <Popup>
                 <div style={{ maxWidth: "220px" }}>
                   <h3>{marker.title}</h3>
-                  <p>{marker.description}</p>
+                  <p><strong>Pig ID:</strong> {marker.description}</p>
                   <p><strong>Location:</strong> {marker.location}</p>
                   <p>Risk Level: <span className={styles[marker.riskLevel]}>{marker.riskLevel}</span></p>
 
