@@ -9,7 +9,7 @@
 .dashboardHeader {
   display: flex;
   justify-content: space-between;
-    font-family: 'Poppins', sans-serif;
+  font-family: 'Poppins', sans-serif;
   align-items: center;
   margin-bottom: 2rem;
   padding: 1rem;
@@ -497,6 +497,7 @@
 .card {
   flex: 1;
   padding: 1rem;
+  font-family: 'Poppins', sans-serif;
   background: #f0f4f7;
   border-radius: 8px;
   text-align: center;
