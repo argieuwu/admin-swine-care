@@ -278,6 +278,7 @@ const Overview = () => {
               <option value="Under Observation">Under Observation</option>
               <option value="Confirmed Case">Confirmed Case</option>
               <option value="Resolved">Resolved</option>
+              <option value="Under Surveillance"></option>
             </select>
 
             {(selectedReport.ears || selectedReport.skin) && (
