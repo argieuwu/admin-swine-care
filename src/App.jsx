@@ -10,6 +10,7 @@ import Overview from './pages/Overview/Overview.jsx';
 import Map from './pages/Map/Map.jsx';
 import Login from './pages/Login/Login.jsx';
 import Register from './pages/Register/Register.jsx';
+import Settings from './pages/Setting/Settings.jsx';
 
 function App() {
   return (
@@ -32,6 +33,7 @@ function App() {
                       <Routes>
                         <Route path="/overview" element={<Overview />} />
                         <Route path="/map" element={<Map />} />
+                        <Route path="/settings" element={<Settings />} />
                       </Routes>
                     </div>
                   </div>
