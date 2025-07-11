@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import styles from './Sidebar.module.css';
-import { FaTachometerAlt, FaMapMarkedAlt } from 'react-icons/fa';
+import { FaTachometerAlt, FaMapMarkedAlt, FaCog } from 'react-icons/fa';
 
 const Sidebar = () => {
   const location = useLocation();
@@ -40,6 +40,14 @@ const Sidebar = () => {
               className={`${styles.sidebarLink} ${location.pathname === '/map' ? styles.active : ''}`}
             >
               <FaMapMarkedAlt className={styles.menuIcon} /> ASF Map
+            </Link>
+          </li>
+          <li className={styles.menuItem}>
+            <Link
+              to="/settings"
+              className={`${styles.sidebarLink} ${location.pathname === '/settings' ? styles.active : ''}`}
+            >
+              <FaCog className={styles.menuIcon} /> Settings
             </Link>
           </li>
         </ul>

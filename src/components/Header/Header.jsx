@@ -8,7 +8,7 @@ const Header = () => {
       <div className={styles.navContainer}>
         <div className={styles.logo}>
           <Link to="/overview">
-            <img src="/public/SwineCareFinal.png" alt="ASF Tracker Icon" className={styles.logoIcon} />
+            <img src="/SwineCareFinal.png" alt="ASF Tracker Icon" className={styles.logoIcon} />
             <span className={styles.logoText}>
               ASF <span className={styles.highlight}>Tracker</span>
             </span>

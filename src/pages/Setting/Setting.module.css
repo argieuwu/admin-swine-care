@@ -1,0 +1,126 @@
+.settingsWrapper {
+  margin-left: 220px; /* Sidebar width */
+  min-height: 100vh;
+  background: #f8f9fa;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 2.5rem 1rem 1rem 1rem;
+}
+
+.settingsCard {
+  background: #fff;
+  border-radius: 18px;
+  box-shadow: 0 4px 24px rgba(44,204,64,0.08), 0 1.5px 8px rgba(0,0,0,0.06);
+  padding: 2.5rem 2.5rem 2rem 2.5rem;
+  max-width: 540px;
+  width: 100%;
+  margin-top: 1.5rem;
+}
+
+.settingsTitle {
+  font-family: 'Poppins', sans-serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: #2ecc40;
+  margin-bottom: 0.5rem;
+}
+
+.settingsDescription {
+  font-family: 'Poppins', sans-serif;
+  color: #555;
+  margin-bottom: 2rem;
+  font-size: 1.1rem;
+}
+
+.settingsForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.settingsFieldset {
+  border: 1px solid #e0e0e0;
+  border-radius: 10px;
+  padding: 1.2rem 1.5rem 1rem 1.5rem;
+  margin-bottom: 0.5rem;
+  background: #f7fafc;
+}
+
+.settingsFieldset legend {
+  font-weight: 600;
+  color: #2ecc40;
+  font-size: 1.1rem;
+  font-family: 'Poppins', sans-serif;
+}
+
+.settingsFieldset label {
+  display: block;
+  margin-bottom: 0.7rem;
+  font-family: 'Poppins', sans-serif;
+  color: #333;
+  font-size: 1rem;
+}
+
+.settingsFieldset input[type="number"],
+.settingsFieldset input[type="text"] {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 1rem;
+  margin-left: 0.5rem;
+  margin-top: 0.2rem;
+  margin-bottom: 0.2rem;
+  width: 60%;
+  font-family: 'Poppins', sans-serif;
+  background: #fff;
+  transition: border 0.2s;
+}
+
+.settingsFieldset input:focus {
+  border: 1.5px solid #2ecc40;
+  outline: none;
+}
+
+.settingsActions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.2rem;
+}
+
+.saveButton {
+  background: linear-gradient(90deg, #2ecc40, #27ae60);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.18s, transform 0.18s;
+}
+
+.saveButton:hover {
+  background: linear-gradient(90deg, #27ae60, #2ecc40);
+  transform: scale(1.04);
+}
+
+.resetButton {
+  background: #f0f0f0;
+  color: #222;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem 2.2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  font-family: 'Poppins', sans-serif;
+  transition: background 0.18s, color 0.18s, transform 0.18s;
+}
+
+.resetButton:hover {
+  background: #e0e0e0;
+  color: #2ecc40;
+  transform: scale(1.04);
+}
