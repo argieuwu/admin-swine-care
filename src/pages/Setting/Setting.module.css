@@ -1,5 +1,5 @@
 .settingsWrapper {
-  margin-left: 220px; /* Sidebar width */
+  margin-left: 220px;
   min-height: 100vh;
   background: #f8f9fa;
   display: flex;
@@ -13,17 +13,18 @@
   border-radius: 18px;
   box-shadow: 0 4px 24px rgba(44,204,64,0.08), 0 1.5px 8px rgba(0,0,0,0.06);
   padding: 2.5rem 2.5rem 2rem 2.5rem;
-  max-width: 540px;
+  max-width: 1200px;
   width: 100%;
   margin-top: 1.5rem;
 }
 
 .settingsTitle {
   font-family: 'Poppins', sans-serif;
-  font-size: 2rem;
+  font-size: 2.2rem;
   font-weight: 700;
   color: #2ecc40;
   margin-bottom: 0.5rem;
+  text-align: left;
 }
 
 .settingsDescription {
@@ -31,27 +32,36 @@
   color: #555;
   margin-bottom: 2rem;
   font-size: 1.1rem;
+  text-align: left;
 }
 
 .settingsForm {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem 2.5rem;
+}
+
+@media (max-width: 900px) {
+  .settingsForm {
+    grid-template-columns: 1fr;
+  }
 }
 
 .settingsFieldset {
   border: 1px solid #e0e0e0;
   border-radius: 10px;
   padding: 1.2rem 1.5rem 1rem 1.5rem;
-  margin-bottom: 0.5rem;
+  margin-bottom: 0;
   background: #f7fafc;
+  min-width: 0;
 }
 
 .settingsFieldset legend {
-  font-weight: 600;
+  font-weight: 700;
   color: #2ecc40;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   font-family: 'Poppins', sans-serif;
+  margin-bottom: 0.7rem;
 }
 
 .settingsFieldset label {
@@ -71,7 +81,7 @@
   margin-left: 0.5rem;
   margin-top: 0.2rem;
   margin-bottom: 0.2rem;
-  width: 60%;
+  width: 70%;
   font-family: 'Poppins', sans-serif;
   background: #fff;
   transition: border 0.2s;
@@ -83,9 +93,11 @@
 }
 
 .settingsActions {
+  grid-column: 1 / -1;
   display: flex;
   gap: 1rem;
   margin-top: 1.2rem;
+  justify-content: flex-end;
 }
 
 .saveButton {
@@ -123,4 +135,81 @@
   background: #e0e0e0;
   color: #2ecc40;
   transform: scale(1.04);
+}
+
+/* --- Symptoms Checklist CRUD --- */
+.symptomAddRow {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.symptomInput {
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #d0d0d0;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: 'Poppins', sans-serif;
+  background: #fff;
+  transition: border 0.2s;
+  width: 40%;
+}
+
+.symptomInput:focus {
+  border: 1.5px solid #2ecc40;
+  outline: none;
+}
+
+.symptomList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.symptomListItem {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 8px;
+  background: #f0f4f8;
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+}
+
+.symptomQuestion {
+  flex: 1 1 40%;
+  font-weight: 600;
+  color: #2ecc40;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  margin-right: 1rem;
+}
+
+.symptomDescription {
+  flex: 2 1 60%;
+  color: #333;
+  font-family: 'Poppins', sans-serif;
+  font-size: 0.98rem;
+  margin-right: 1rem;
+}
+
+.errorMsg {
+  color: #e63946;
+  background: #ffeaea;
+  border-radius: 6px;
+  padding: 0.7rem 1.2rem;
+  margin-bottom: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+}
+
+.successMsg {
+  color: #27ae60;
+  background: #eafaf1;
+  border-radius: 6px;
+  padding: 0.7rem 1.2rem;
+  margin-bottom: 1rem;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
 }
