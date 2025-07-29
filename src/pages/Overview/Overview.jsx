@@ -276,6 +276,7 @@ const Overview = () => {
               onChange={handleStatusChangeInDialog}
             >
               <option value="Under Observation">Under Observation</option>
+              <option value="Under Surveillance">Under Surveillance</option>
               <option value="Confirmed Case">Confirmed Case</option>
               <option value="Resolved">Resolved</option>
             </select>
